@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { saveWords, getWords, getPlayerScores, savePlayerScores } from '../../utils/localstorage';
-import { getNewWord, currentDate, convertSecondsToMMSS } from '../../utils/game';
+import React from 'react';
+import { convertSecondsToMMSS } from '../../utils/game';
+import { clearPlayerScores } from '../../utils/localstorage';
 
 import LevelIcon from '../../images/icons/gamepad.png';
 import playerIcon from '../../images/icons/person.png';
 import playIcon from '../../images/icons/play.png';
+
+import stopIcon from '../../images/icons/cross.png';
+import replayIcon from '../../images/icons/reload.png';
 
 import ScoreBoard from '../ScoreBoard';
 
@@ -14,6 +17,7 @@ function Game({ player, setPlayer }) {
     };
 
     const startAgain = () => {
+        clearPlayerScores(player.playerName);
         setPlayer({ ...player, page: 'home' });
     };
 
@@ -35,10 +39,22 @@ function Game({ player, setPlayer }) {
                 <div className="col-md-3">
                     <ScoreBoard player={player} />
                 </div>
-                <div className="col-md-6">
-                    <center>{convertSecondsToMMSS(player.latestScore)}</center>
-                    <button onClick={startAgain}>QUIT</button>
-                    <button onClick={playAgain}>PLAY AGAIN</button>
+                <div className="col-md-6 text-center">
+                    <div className="final-score">
+                        SCORE
+                        <br />
+                        {convertSecondsToMMSS(player.latestScore)}
+                    </div>
+                    <br />
+                    <button className="replay-game-btn" onClick={playAgain}>
+                        <img src={replayIcon} alt="Replay Game" className="img-fluid player-image" />
+                        PLAY AGAIN
+                    </button>
+                    <br />
+                    <button className="stop-game-btn" onClick={startAgain}>
+                        <img src={stopIcon} alt="Stop Game" className="img-fluid player-image" />
+                        QUIT
+                    </button>
                 </div>
                 <div className="col-md-3"></div>
             </div>

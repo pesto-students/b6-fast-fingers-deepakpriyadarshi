@@ -15,3 +15,4 @@ export const getWords = (wordType) => JSON.parse(window.localStorage.getItem(wor
 
 export const savePlayerScores = (playerName, playerScores) => window.localStorage.setItem(playerName, JSON.stringify(playerScores));
 export const getPlayerScores = (playerName) => JSON.parse(window.localStorage.getItem(playerName));
+export const clearPlayerScores = (playerName) => window.localStorage.removeItem(playerName);

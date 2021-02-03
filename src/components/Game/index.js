@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { saveWords, getWords, getPlayerScores, savePlayerScores } from '../../utils/localstorage';
 import { getNewWord, currentDate, convertSecondsToMMSS } from '../../utils/game';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import Countdown from 'react-countdown';
 
 import LevelIcon from '../../images/icons/gamepad.png';
 import playerIcon from '../../images/icons/person.png';
@@ -8,7 +10,6 @@ import playIcon from '../../images/icons/play.png';
 
 import dictionary from '../../data/dictionary.json';
 
-import Timer from '../Timer';
 import ScoreBoard from '../ScoreBoard';
 
 function Game({ player, setPlayer }) {
@@ -20,18 +21,12 @@ function Game({ player, setPlayer }) {
         currentWord: 'DEEPAK',
         currentWordTime: 10,
         previousWordTime: 10,
-        startTimer: false,
-        gameStatus: 'begin',
         currentScore: 0,
+        highScore: 0,
     };
 
     const [game, setGame] = useState(initialGameState);
-    const [timer, setTimer] = useState({
-        timeLimit: initialGameState.currentWordTime,
-        timeLeft: initialGameState.currentWordTime,
-        timePassed: 0,
-        timeInterval: null,
-    });
+    const [timerKey, setTimerKey] = useState(0);
 
     /* Prepare Dictionary Here */
     useEffect(() => {
@@ -52,50 +47,7 @@ function Game({ player, setPlayer }) {
         saveWords('easywords', easyWords);
         saveWords('mediumwords', mediumWords);
         saveWords('hardwords', hardWords);
-
-        /* Set Current Word */
-        // let allWords = {
-        //     easy: getWords('easywords'),
-        //     medium: getWords('mediumwords'),
-        //     hard: getWords('hardwords'),
-        // };
-
-        // let newGameWord = getNewWord(allWords, game.difficultyFactor);
-
-        // setGame({
-        //     ...game,
-        //     currentWord: newGameWord,
-        //     currentWordTime: Math.max(Math.round(newGameWord.length / game.difficultyFactor), 2),
-        //     startTimer: true,
-        // });
-
-        // console.log('NEW WORD SELECTED', newGameWord);
-        // console.log('GAME', game);
-
-        // return () => {
-        //     console.log('DISMOUNTED');
-        // };
     }, []);
-
-    let timeIntervalRef = useRef();
-
-    const countDown = () => {
-        console.log('Counting Down');
-        if (timer.timeLeft <= 0) {
-            clearInterval(timeIntervalRef.current);
-            completeGame();
-        }
-        setTimer({ ...timer, timeLeft: timer.timeLeft - 1 });
-    };
-
-    useEffect(() => {
-        const intervalID = setTimeout(() => {
-            countDown();
-        }, 1000);
-
-        timeIntervalRef.current = intervalID;
-        return () => clearInterval(timeIntervalRef.current);
-    }, [countDown]);
 
     const validateWord = (inputTarget) => {
         let allWords = {
@@ -107,7 +59,7 @@ function Game({ player, setPlayer }) {
         const playerWord = inputTarget.value.toUpperCase();
 
         if (playerWord === game.currentWord) {
-            const difficultyFactor = game.difficultyFactor + 0.01;
+            const difficultyFactor = game.difficultyFactor + 0.1;
 
             let difficultyLevel;
             if (difficultyFactor >= 2) difficultyLevel = 'hard';
@@ -130,7 +82,7 @@ function Game({ player, setPlayer }) {
             });
             inputTarget.value = '';
 
-            setTimer({ ...timer, timeLimit: timeForWord, timeLeft: timeForWord, timePassed: 0, timeInterval: null });
+            setTimerKey(timerKey + 1);
         } else {
             setGame({ ...game, playerInput: playerWord });
         }
@@ -158,8 +110,11 @@ function Game({ player, setPlayer }) {
 
     const completeGame = () => {
         let scores = getPlayerScores(game.playerName);
+        let bsIndex = 0;
         if (scores === null || scores === undefined || scores.length === 0) {
             scores = [];
+        } else {
+            //
         }
         scores.push({
             date: currentDate(),
@@ -167,22 +122,8 @@ function Game({ player, setPlayer }) {
         });
 
         savePlayerScores(game.playerName, scores);
-        setPlayer({ ...player, page: 'end', latestScore: game.currentScore });
+        setPlayer({ ...player, page: 'end', latestScore: game.currentScore, bestScoreIndex: bsIndex });
     };
-
-    /* Timer Start Here */
-    const FULL_DASH_ARRAY = 283;
-    const WARNING_THRESHOLD = 10;
-    const ALERT_THRESHOLD = 5;
-
-    const COLOR_CODES = {
-        info: { color: 'green' },
-        warning: { color: 'orange', threshold: WARNING_THRESHOLD },
-        alert: { color: 'red', threshold: ALERT_THRESHOLD },
-    };
-
-    let remainingPathColor = COLOR_CODES.info.color;
-    /* Timer Ends Here */
 
     return (
         <div className="game">
@@ -206,21 +147,31 @@ function Game({ player, setPlayer }) {
                 </div>
                 <div className="col-md-6">
                     <div id="timer">
-                        <div className="base-timer">
-                            <svg className="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <g className="base-timer__circle">
-                                    <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-                                    <path
-                                        id="base-timer-path-remaining"
-                                        htmlstroke-dasharray="283"
-                                        className={`base-timer__path-remaining ${remainingPathColor}`}
-                                        d="M 50, 50m -45, 0a 45,45 0 1,0 90,0a 45,45 0 1,0 -90,0"></path>
-                                </g>
-                            </svg>
-                            <span id="base-timer-label" className="base-timer__label">
-                                {convertSecondsToMMSS(timer.timeLeft)}
-                            </span>
-                        </div>
+                        <CountdownCircleTimer
+                            isPlaying
+                            key={timerKey}
+                            rotation="counterclockwise"
+                            duration={game.currentWordTime}
+                            colors={[
+                                ['#28a745', 0.33],
+                                ['#ffa500', 0.33],
+                                ['#e50914', 0.33],
+                            ]}
+                            onComplete={(totalElapsedTime) => {
+                                completeGame();
+                                return [false, 0];
+                            }}>
+                            {({ remainingTime }) => remainingTime}
+                        </CountdownCircleTimer>
+                        <br />
+                        <Countdown
+                            key={timerKey + 1}
+                            date={Date.now() + game.currentWordTime * 1000}
+                            onTick={() => {
+                                setGame({ ...game, currentScore: game.currentScore + 1 });
+                            }}
+                            className="all-hidden"
+                        />
                     </div>
                     <br />
                     <center>{wordComponent()}</center>

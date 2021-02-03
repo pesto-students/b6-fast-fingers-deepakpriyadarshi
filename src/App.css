@@ -195,3 +195,30 @@ input[name='playerWord'] {
     font-weight: bolder;
     color: #222222;
 }
+
+.all-hidden {
+    display: none;
+}
+
+.stop-game-btn {
+    background-color: transparent;
+    color: var(--game-red);
+    border: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-top: 120px;
+}
+
+.replay-game-btn {
+    background-color: transparent;
+    color: var(--game-red);
+    border: none;
+    text-transform: uppercase;
+    font-size: 30px;
+    margin-top: 60px;
+}
+
+.final-score {
+    font-size: 60px;
+    color: #ffffff;
+}
