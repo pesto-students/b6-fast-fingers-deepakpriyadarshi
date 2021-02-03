@@ -13,7 +13,7 @@ function ScoreBoard({ player }) {
             savedPlayerScores === null || savedPlayerScores === undefined || !Array.isArray(savedPlayerScores) ? [] : savedPlayerScores;
 
         setplayerScores(savedPlayerScores);
-    }, []);
+    }, [player]);
 
     return (
         <div className="scoreboard-box">
