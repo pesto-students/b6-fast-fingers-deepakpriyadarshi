@@ -32,10 +32,8 @@ function Home({ player, setPlayer }) {
     const startGame = (ev) => {
         ev.preventDefault();
         if (handlePlayer(ev.target.elements.playername) && handleDifficulty(ev.target.elements.difficulty)) {
-            console.log('Start Game');
             setPlayer({ ...player, page: 'game' });
         } else {
-            console.log('Some Error Happened');
         }
     };
 
@@ -48,7 +46,7 @@ function Home({ player, setPlayer }) {
             </h6>
 
             <div className="row">
-                <div className="col-sm-3">column 1</div>
+                <div className="col-sm-3"></div>
                 <div className="col-sm-6">
                     <form onSubmit={(ev) => startGame(ev)}>
                         <input type="text" name="playername" onInput={(ev) => handlePlayer(ev.target)} placeholder="TYPE YOUR NAME" />
@@ -71,7 +69,7 @@ function Home({ player, setPlayer }) {
                         </button>
                     </form>
                 </div>
-                <div className="col-sm-3 text-right">column 2</div>
+                <div className="col-sm-3 text-right"></div>
             </div>
         </div>
     );

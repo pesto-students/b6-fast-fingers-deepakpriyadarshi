@@ -17,11 +17,12 @@ function ScoreBoard({ player }) {
 
     return (
         <div className="scoreboard-box">
-            scoreboard
+            <div className="text-center">SCOREBOARD</div>
+            <hr></hr>
             <div className="content">
                 <ul>
                     {playerScores.map((scoreData, index) => (
-                        <li key={index} className="game-score-history">
+                        <li key={index} className={`game-score-history ${player.bestScoreIndex === index ? 'bestscore' : ''}`}>
                             GAME {index + 1}: {convertSecondsToMMSS(scoreData.time)}
                         </li>
                     ))}

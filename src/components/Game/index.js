@@ -13,21 +13,6 @@ import dictionary from '../../data/dictionary.json';
 import ScoreBoard from '../ScoreBoard';
 
 function Game({ player, setPlayer }) {
-    const initialGameState = {
-        playerName: player.playerName,
-        difficulty: player.difficulty,
-        difficultyFactor: player.difficultyFactor,
-        playerInput: '',
-        currentWord: 'DEEPAK',
-        currentWordTime: 10,
-        previousWordTime: 10,
-        currentScore: 0,
-        highScore: 0,
-    };
-
-    const [game, setGame] = useState(initialGameState);
-    const [timerKey, setTimerKey] = useState(0);
-
     /* Prepare Dictionary Here */
     useEffect(() => {
         const easyWords = [],
@@ -49,24 +34,57 @@ function Game({ player, setPlayer }) {
         saveWords('hardwords', hardWords);
     }, []);
 
-    const validateWord = (inputTarget) => {
-        let allWords = {
-            easy: getWords('easywords'),
-            medium: getWords('mediumwords'),
-            hard: getWords('hardwords'),
-        };
+    const initialGameState = {
+        playerName: player.playerName,
+        difficulty: player.difficulty,
+        difficultyFactor: player.difficultyFactor,
+        playerInput: '',
+        currentWord: 'DEEPAK',
+        currentWordTime: 10,
+        previousWordTime: 10,
+        currentScore: 0,
+        highScore: 0,
+    };
 
+    const [game, setGame] = useState(initialGameState);
+    const [timerKey, setTimerKey] = useState(0);
+
+    useEffect(() => {
+        function setNewWord() {
+            let allWords = {
+                easy: getWords('easywords'),
+                medium: getWords('mediumwords'),
+                hard: getWords('hardwords'),
+            };
+
+            const newWord = getNewWord(allWords, player.difficultyFactor);
+            let timeForWord = Math.round(newWord.length / player.difficultyFactor);
+            timeForWord = Math.max(timeForWord, 2);
+
+            setGame((prevItems) => {
+                return { ...prevItems, currentWord: newWord, currentWordTime: timeForWord };
+            });
+            console.log('SET FIRST WORD');
+            setTimerKey((timerKey) => timerKey + 1);
+        }
+        setNewWord();
+    }, [player]);
+
+    const validateWord = (inputTarget) => {
         const playerWord = inputTarget.value.toUpperCase();
 
         if (playerWord === game.currentWord) {
-            const difficultyFactor = game.difficultyFactor + 0.1;
+            let allWords = {
+                easy: getWords('easywords'),
+                medium: getWords('mediumwords'),
+                hard: getWords('hardwords'),
+            };
+            const difficultyFactor = game.difficultyFactor + 0.01;
 
             let difficultyLevel;
             if (difficultyFactor >= 2) difficultyLevel = 'hard';
             else if (difficultyFactor < 1.5) difficultyLevel = 'easy';
             else difficultyLevel = 'medium';
-
-            if (game.difficultyLevel !== difficultyLevel) console.log('level changed!');
 
             const newWord = getNewWord(allWords, difficultyFactor);
             let timeForWord = Math.round(newWord.length / difficultyFactor);

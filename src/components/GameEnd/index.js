@@ -4,7 +4,6 @@ import { clearPlayerScores } from '../../utils/localstorage';
 
 import LevelIcon from '../../images/icons/gamepad.png';
 import playerIcon from '../../images/icons/person.png';
-import playIcon from '../../images/icons/play.png';
 
 import stopIcon from '../../images/icons/cross.png';
 import replayIcon from '../../images/icons/reload.png';
@@ -32,7 +31,6 @@ function Game({ player, setPlayer }) {
                 </div>
                 <div className="col-sm-3">
                     <h2>Fast Fingers</h2>
-                    <img src={playIcon} alt="Player" className="img-fluid player-image" />
                 </div>
             </div>
             <div className="row game-block">

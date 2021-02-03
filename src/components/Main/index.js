@@ -23,8 +23,8 @@ function Main() {
             return <Game player={player} setPlayer={setPlayer} />;
         case 'end':
             return <GameEnd player={player} setPlayer={setPlayer} />;
-        default: {
-        }
+        default:
+            return <Home player={player} setPlayer={setPlayer} />;
     }
 }
 
