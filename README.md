@@ -1,5 +1,9 @@
 # Fast Fingers
 
+Demo Link : https://fastfingersdeepak.netlify.app/
+
+# Intro
+
 Pesto Tech is proudly launching its own speed typing game named **Fast fingers**. You have been awarded with the project and you need to design and develop this project which should
 meet the requirements mentioned in the MVP below.
 
@@ -7,17 +11,17 @@ meet the requirements mentioned in the MVP below.
 
 1. Ask player to enter his/her name before starting the game.
 
-   - Do not ask player to enter his/her name again if he plays the game again in the same session.
-   - Show proper error message if player doesn't enter his/her name and clicks on `START GAME`.
+    - Do not ask player to enter his/her name again if he plays the game again in the same session.
+    - Show proper error message if player doesn't enter his/her name and clicks on `START GAME`.
 
 2. Set Default difficulty level to `EASY`. User should be able to change the difficulty level using dropdown.
 3. Start the game on `START GAME` button click.
 
 4. Show random word from dictionary and an input box on game screen.
 
-- For `EASY` difficulty level, word length should be less than or equal to 4.
-- For `MEDIUM` difficulty level, word length should be between 5-8(noth numbers included).
-- For `HARD` difficulty level, word length should be greater than 8.
+-   For `EASY` difficulty level, word length should be less than or equal to 4.
+-   For `MEDIUM` difficulty level, word length should be between 5-8(noth numbers included).
+-   For `HARD` difficulty level, word length should be greater than 8.
 
 5. As soon as the typed word matches the word shown on screen, it should we considered submitted (pressing "ENTER" button shall not be required to submit a word). Empty the input box after a successful attempt.
 
@@ -53,12 +57,12 @@ Difficulty factor for hard level: 2
 
 ## Additional Requirement
 
-- Write Test cases for your components.
+-   Write Test cases for your components.
 
 ## Tips
 
-- Deploy your application in very early stage and then do continous development.
-- Test your application in Google Chrome, Mozilla firefox and Internet explorer 11.
+-   Deploy your application in very early stage and then do continous development.
+-   Test your application in Google Chrome, Mozilla firefox and Internet explorer 11.
 
 ## UI Design mocks
 
@@ -78,11 +82,11 @@ Zeplin App Link: zpl://project?pid=5f75f13621f33094313f2b94
 
 ## Allowed Tech stack
 
-- HTML, CSS, JavaScript
-- Bootstrap
-- ReactJS
-- SCSS
-- DOM Testing Library
-- Jest and React Testing Library
+-   HTML, CSS, JavaScript
+-   Bootstrap
+-   ReactJS
+-   SCSS
+-   DOM Testing Library
+-   Jest and React Testing Library
 
 **NOTE: React Component libraries like Material UI, Antd, Chakra UI are not allowed**
