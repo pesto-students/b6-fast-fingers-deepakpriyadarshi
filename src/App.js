@@ -6,6 +6,7 @@ import Welcome from './pages/Welcome';
 import './App.css';
 import GuestLogin from './pages/GuestLogin';
 import Game from './pages/Game';
+import Result from './pages/Result';
 
 function App() {
     return (
@@ -13,9 +14,8 @@ function App() {
             <Switch>
                 <Route exact path="/" component={Welcome}></Route>
                 <Route exact path="/guest" component={GuestLogin}></Route>
-                <Route exact path="/game">
-                    <Game></Game>
-                </Route>
+                <Route exact path="/game" render={(props) => <Game {...props} />}></Route>
+                <Route exact path="/result" render={(props) => <Result {...props} />}></Route>
             </Switch>
         </Router>
     );

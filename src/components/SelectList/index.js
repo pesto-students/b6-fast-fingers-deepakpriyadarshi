@@ -8,7 +8,11 @@ const SelectList = ({ label, width, data, ...rest }) => {
             <select className={`border-2 p-2 rounded-xl ${width || 'w-52'}`} {...rest}>
                 {data ? (
                     data.map((option, index) => {
-                        return <option value={option.value}>{option.name}</option>;
+                        return (
+                            <option key={`sl-${index}`} value={option.value}>
+                                {option.name}
+                            </option>
+                        );
                     })
                 ) : (
                     <option value="">No Data</option>

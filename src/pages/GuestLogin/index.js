@@ -5,6 +5,7 @@ import SelectList from '../../components/SelectList';
 import TextInput from '../../components/TextInput';
 
 import { logoIconPNG, logoNamePNG } from '../../utils/images';
+import { createGame } from '../../utils/localstorage';
 
 const GuestLogin = () => {
     const randomGuestName = `Guest-${new Date().getTime()}`;
@@ -12,16 +13,28 @@ const GuestLogin = () => {
     const [guestName, setGuestName] = useState(randomGuestName);
     const [guestNameError, setGuestNameError] = useState('');
 
+    const [gameDifficulty, setGameDifficulty] = useState('easy');
+
     const [redirectToGame, setRedirectToGame] = useState(false);
 
-    if (redirectToGame) return <Redirect to="/game" />;
+    if (redirectToGame) {
+        return (
+            <Redirect
+                to={{
+                    pathname: '/game',
+                    state: { playerName: guestName },
+                }}
+            />
+        );
+    }
 
     const startGame = () => {
         if (guestName.length <= 0) {
             setGuestNameError('Enter Your Name');
         } else {
+            createGame({ gameMode: 'guest', gameDifficulty: gameDifficulty, gameDifficultyFactor: 1, playerName: guestName });
+
             setRedirectToGame(true);
-            console.log('Start Game');
         }
     };
 
@@ -53,9 +66,14 @@ const GuestLogin = () => {
             <div className="w-full text-center">
                 <TextInput onChange={(ev) => setGuestName(ev.target.value)} value={guestName} placeholder="e.g. Deepak" label="Your Name" />
                 <div className="my-3 text-red-500 font-semibold">{guestNameError !== '' ? guestNameError : ''}</div>
-                <SelectList placeholder="Select Difficulty" label="Difficulty" data={selectData} />
+                <SelectList
+                    onChange={(ev) => setGameDifficulty(ev.target.value)}
+                    placeholder="Select Difficulty"
+                    label="Difficulty"
+                    data={selectData}
+                />
                 <div className="my-3 text-red-500 font-semibold">{guestNameError !== '' ? guestNameError : ''}</div>
-                <button onClick={startGame} className="bg-red-500 text-white rounded px-5 py-2 mt-10">
+                <button onClick={startGame} className="bg-green-500 text-white rounded px-5 py-2 mt-10">
                     Start Game
                 </button>
             </div>
