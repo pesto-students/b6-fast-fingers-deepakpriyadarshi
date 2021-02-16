@@ -2,12 +2,16 @@ import React from 'react';
 
 import { menuSVG, logoNamePNG } from '../../utils/images';
 import { DEVELOPER_NAME, DEVELOPER_WEBSITE } from '../../utils/constants';
+import { Link } from 'react-router-dom';
 
 const GameLayout = ({ children }) => {
     return (
         <div className="App">
             <header className="app-header flex justify-between align-middle py-3 px-2 border-b-2">
-                <img src={logoNamePNG} className="h-4 sm:h-6 my-auto" alt="Logo" />
+                <Link to="/" className="my-auto">
+                    <img src={logoNamePNG} className="h-4 sm:h-6" alt="Logo" />
+                </Link>
+
                 <div>
                     <ul className="hidden md:inline-flex">
                         <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium hover:border-blue-500 hover:shadow-lg hover:bg-white">
