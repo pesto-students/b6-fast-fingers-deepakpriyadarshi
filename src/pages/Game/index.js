@@ -17,6 +17,7 @@ const Game = (props) => {
     const [redirectToResult, setRedirectToResult] = useState(false);
     const [wordTimerKey, setWordTimerKey] = useState(0);
 
+    const [playerInput, setPlayerInput] = useState('');
     const [currentWord, setCurrentWord] = useState(gameDetails.currentWord);
     const [currentWordTime, setCurrentWordTime] = useState(gameDetails.currentWordTime);
     const [gameDifficulty, setGameDifficulty] = useState(gameDetails.gameDifficulty);
@@ -45,6 +46,8 @@ const Game = (props) => {
 
     const validateWord = (userWordInput) => {
         let userWord = userWordInput.value.toUpperCase();
+
+        setPlayerInput(userWord);
 
         if (currentWord === userWord) {
             const newDifficultyFactor = gameDifficultyFactor + 0.1;
@@ -81,23 +84,50 @@ const Game = (props) => {
         clearInterval(gameTimerId.current);
     };
 
+    const WordComponent = () => {
+        const currentWordCharacter = currentWord.split('');
+        const playerInputCharacters = playerInput.split('');
+        return (
+            <div className="new-word">
+                {currentWordCharacter.map((char, i) => {
+                    let color;
+                    if (i < playerInput.length) {
+                        color = char === playerInputCharacters[i] ? '#54ba18' : '#445298';
+                    }
+                    return (
+                        <span key={i} style={{ color: color }}>
+                            {char}
+                        </span>
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <GameLayout>
             <div className="flex justify-between p-5">
-                <h1 className="">{gameDetails.playerName}</h1>
+                <div>
+                    <h1 className="">{gameDetails.playerName}</h1>
+                    <h1 className="uppercase">{gameDifficulty}</h1>
+                </div>
+
                 <h1 className="">SCORE: {convertSecondsToMMSS(gameTime)}</h1>
             </div>
             <div>Welcome To Game Page</div>
 
             <hr />
             <div>Word timer</div>
-            <WordTimer key={wordTimerKey} time={currentWordTime} onComplete={() => endGame()} />
+            <WordTimer key={wordTimerKey} time={currentWordTime} onComplete={() => endGame()} className="" />
             <div className="text-center">
-                <h1>{currentWord}</h1>
+                <h1 className="text-3xl font-extrabold">
+                    <WordComponent />
+                </h1>
                 <TextInput
                     onChange={(ev) => validateWord(ev.target)}
                     label=" "
                     style={{ textTransform: 'uppercase', textAlign: 'center' }}
+                    className="border-red-500"
                 />
             </div>
         </GameLayout>

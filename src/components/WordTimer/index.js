@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 
 // import { convertSecondsToMMSS } from '../../utils/helpers';
 
-function WordTimer({ time, onComplete }) {
+function WordTimer({ time, onComplete, className: classNameOverride }) {
     const wordTimerId = useRef();
     const [wordTime, setWordTime] = useState(time);
 
@@ -23,7 +23,7 @@ function WordTimer({ time, onComplete }) {
 
     return (
         <div>
-            <h1 className="text-center text-6xl">{wordTime}</h1>
+            <h1 className={`text-center text-8xl py-5 text-red-500 ${classNameOverride}`}>{wordTime}</h1>
         </div>
     );
 }
