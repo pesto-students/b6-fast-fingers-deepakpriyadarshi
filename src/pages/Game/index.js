@@ -4,6 +4,7 @@ import WordTimer from '../../components/WordTimer';
 
 import { getGame, saveGame } from '../../utils/localstorage';
 import { convertSecondsToMMSS, getNewWord } from '../../utils/helpers';
+import { DIFFICULTY_LEVELS } from '../../utils/constants';
 import { Redirect } from 'react-router-dom';
 import TextInput from '../../components/TextInput';
 
@@ -28,6 +29,7 @@ const Game = (props) => {
             gameScore.current += 1;
             setGameTime((prevTime) => (prevTime += 1));
         }, 1000);
+
         return () => clearInterval(gameTimerId.current);
     }, []);
 
@@ -46,8 +48,6 @@ const Game = (props) => {
 
     const validateWord = (userWordInput) => {
         let userWord = userWordInput.value.toUpperCase();
-
-        setPlayerInput(userWord);
 
         if (currentWord === userWord) {
             const newDifficultyFactor = gameDifficultyFactor + 0.1;
@@ -70,13 +70,23 @@ const Game = (props) => {
 
             setWordTimerKey((prevWordTimerKey) => (prevWordTimerKey += 1));
             userWordInput.value = '';
-        }
+        } else setPlayerInput(userWord);
     };
 
     const endGame = () => {
         gameDetails.playerBestScore = gameScore.current > gameDetails.playerBestScore ? gameScore.current : gameDetails.playerBestScore;
         gameDetails.playerScore = gameScore.current;
         gameDetails.scores.push(gameScore.current);
+
+        gameDetails.gameDifficulty = gameDifficulty;
+        gameDetails.gameDifficultyFactor = gameDifficultyFactor;
+
+        const newWord = getNewWord(gameDifficulty);
+        let timeForWord = Math.round(newWord.length / gameDifficultyFactor);
+        timeForWord = Math.max(timeForWord, 2);
+
+        gameDetails.currentWord = newWord;
+        gameDetails.currentWordTime = timeForWord;
 
         saveGame(gameDetails);
 
@@ -88,11 +98,11 @@ const Game = (props) => {
         const currentWordCharacter = currentWord.split('');
         const playerInputCharacters = playerInput.split('');
         return (
-            <div className="new-word">
+            <div className="break-all">
                 {currentWordCharacter.map((char, i) => {
                     let color;
                     if (i < playerInput.length) {
-                        color = char === playerInputCharacters[i] ? '#54ba18' : '#445298';
+                        color = char === playerInputCharacters[i] ? 'green' : 'red';
                     }
                     return (
                         <span key={i} style={{ color: color }}>
@@ -106,18 +116,16 @@ const Game = (props) => {
 
     return (
         <GameLayout>
-            <div className="flex justify-between p-5">
+            <div className="flex justify-between p-3">
                 <div>
-                    <h1 className="">{gameDetails.playerName}</h1>
-                    <h1 className="uppercase">{gameDifficulty}</h1>
+                    <h1 className="font-bold md:text-xl">{gameDetails.playerName}</h1>
+                    <h1 className="font-bold md:text-xl">
+                        Difficulty: <span className="uppercase">{gameDifficulty}</span>
+                    </h1>
                 </div>
 
-                <h1 className="">SCORE: {convertSecondsToMMSS(gameTime)}</h1>
+                <h1 className="text-yellow-500 font-bold md:text-3xl">SCORE: {convertSecondsToMMSS(gameTime)}</h1>
             </div>
-            <div>Welcome To Game Page</div>
-
-            <hr />
-            <div>Word timer</div>
             <WordTimer key={wordTimerKey} time={currentWordTime} onComplete={() => endGame()} className="" />
             <div className="text-center">
                 <h1 className="text-3xl font-extrabold">
@@ -128,7 +136,13 @@ const Game = (props) => {
                     label=" "
                     style={{ textTransform: 'uppercase', textAlign: 'center' }}
                     className="border-red-500"
+                    autoFocus
                 />
+                <button
+                    onClick={() => endGame()}
+                    className="bg-red-500 text-white rounded px-5 py-2 mt-24 uppercase font-bold tracking-widest">
+                    Stop
+                </button>
             </div>
         </GameLayout>
     );
