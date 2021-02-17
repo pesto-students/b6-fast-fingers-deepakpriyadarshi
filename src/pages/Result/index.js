@@ -4,8 +4,9 @@ import GameLayout from '../../components/GameLayout';
 import { getGame } from '../../utils/localstorage';
 import { Redirect } from 'react-router-dom';
 
-import { trophySVG, bestscoreSVG } from '../../utils/images';
+import { trophySVG } from '../../utils/images';
 import { convertSecondsToMMSS } from '../../utils/helpers';
+import ScoreBoard from '../../components/Scoreboard';
 
 const Result = (props) => {
     let gameDetails = getGame(props.location.state.playerName);
@@ -46,6 +47,7 @@ const Result = (props) => {
                     Stop
                 </button>
             </div>
+            <ScoreBoard playerName={gameDetails.playerName} />
         </GameLayout>
     );
 };
