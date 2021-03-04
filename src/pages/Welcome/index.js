@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import BrandBlock from '../../components/BrandBlock';
 import GameLayout from '../../components/GameLayout';
-import BrandBlock from '../BrandBlock';
 
 import { prepareDictionary } from '../../utils/helpers';
 
@@ -18,12 +18,9 @@ const Welcome = () => {
                 <Link to="/guest" className="mx-2 py-2 px-5 border-2 border-blue-500 rounded font-bold hover:bg-white hover:shadow-lg">
                     Guest
                 </Link>
-                {/* <Link
-                    to="/register"
-                    className="mx-2 py-2 px-5 border-2 border-blue-500 rounded font-bold hover:bg-white hover:shadow-lg"
-                    disabled>
-                    Register
-                </Link> */}
+                <Link to="/login" className="mx-2 py-2 px-5 border-2 border-blue-500 rounded font-bold hover:bg-white hover:shadow-lg">
+                    Log In
+                </Link>
             </div>
         </GameLayout>
     );

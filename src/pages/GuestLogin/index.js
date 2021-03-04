@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import BrandBlock from '../../components/BrandBlock';
 import GameLayout from '../../components/GameLayout';
 import SelectList from '../../components/SelectList';
 import TextInput from '../../components/TextInput';
@@ -55,13 +56,7 @@ const GuestLogin = () => {
 
     return (
         <GameLayout>
-            <div className="pt-16">
-                <center>
-                    <img src={logoIconPNG} className="w-32" alt="Logo" />
-                    <br />
-                    <img src={logoNamePNG} className="w-60" alt="Logo" />
-                </center>
-            </div>
+            <BrandBlock />
             <h5 className="mt-10 mb-10 text-center font-semibold text-lg">Welcome ! {guestName}</h5>
             <div className="w-full text-center">
                 <TextInput onChange={(ev) => setGuestName(ev.target.value)} value={guestName} placeholder="e.g. Deepak" label="Your Name" />

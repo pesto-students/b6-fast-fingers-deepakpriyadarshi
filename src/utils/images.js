@@ -10,3 +10,5 @@ export const menuSVG = IMAGE_PATH + 'menu.svg';
 export const trophySVG = IMAGE_PATH + 'trophy.svg';
 export const bestscoreSVG = IMAGE_PATH + 'bestscore.svg';
 export const scoreboardSVG = IMAGE_PATH + 'scoreboard.svg';
+
+export const loaderGIF = IMAGE_PATH + 'loader.gif';

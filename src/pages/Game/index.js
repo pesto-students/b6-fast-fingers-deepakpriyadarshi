@@ -4,7 +4,7 @@ import WordTimer from '../../components/WordTimer';
 
 import { getGame, saveGame } from '../../utils/localstorage';
 import { convertSecondsToMMSS, getNewWord } from '../../utils/helpers';
-import { DIFFICULTY_LEVELS } from '../../utils/constants';
+// import { DIFFICULTY_LEVELS } from '../../utils/constants';
 import { Redirect } from 'react-router-dom';
 import TextInput from '../../components/TextInput';
 
@@ -50,7 +50,7 @@ const Game = (props) => {
         let userWord = userWordInput.value.toUpperCase();
 
         if (currentWord === userWord) {
-            const newDifficultyFactor = gameDifficultyFactor + 0.1;
+            const newDifficultyFactor = gameDifficultyFactor + 0.01;
 
             let newDifficulty;
 

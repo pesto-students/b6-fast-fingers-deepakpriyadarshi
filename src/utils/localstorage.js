@@ -25,3 +25,6 @@ export const saveGame = (gameData) => localStorage.setItem(`game-${gameData.play
 
 export const saveWords = (wordType, wordData) => window.localStorage.setItem(wordType, JSON.stringify(wordData));
 export const getWords = (wordType) => JSON.parse(window.localStorage.getItem(wordType));
+
+export const savePlayerAuth = (playerAuth) => window.localStorage.setItem('player', playerAuth);
+export const getPlayerAuth = () => JSON.parse(window.localStorage.getItem('player'));
