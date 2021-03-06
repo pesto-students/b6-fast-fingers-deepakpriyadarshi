@@ -8,8 +8,6 @@ import { scoreboardSVG, bestscoreSVG } from '../../utils/images';
 const ScoreBoard = ({ playerName }) => {
     let gameDetails = getGame(playerName);
 
-    console.log('SCOREBOARD', playerName);
-
     return (
         <div className="flex justify-center mt-10 mb-10">
             <div className="w-full mx-2 md:w-2/4 mt-10 border-2">
