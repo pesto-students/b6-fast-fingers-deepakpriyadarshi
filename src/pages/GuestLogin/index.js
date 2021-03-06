@@ -4,8 +4,9 @@ import BrandBlock from '../../components/BrandBlock';
 import GameLayout from '../../components/GameLayout';
 import SelectList from '../../components/SelectList';
 import TextInput from '../../components/TextInput';
+import { isUserLogged } from '../../utils/helpers';
+import { selectData } from '../../utils/constants';
 
-import { logoIconPNG, logoNamePNG } from '../../utils/images';
 import { createGame } from '../../utils/localstorage';
 
 const GuestLogin = () => {
@@ -39,20 +40,7 @@ const GuestLogin = () => {
         }
     };
 
-    const selectData = [
-        {
-            name: 'EASY',
-            value: 'easy',
-        },
-        {
-            name: 'MEDIUM',
-            value: 'medium',
-        },
-        {
-            name: 'HARD',
-            value: 'hard',
-        },
-    ];
+    if (isUserLogged()) return <Redirect to="/dashboard" />;
 
     return (
         <GameLayout>

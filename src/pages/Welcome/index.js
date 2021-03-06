@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import BrandBlock from '../../components/BrandBlock';
 import GameLayout from '../../components/GameLayout';
 
-import { prepareDictionary } from '../../utils/helpers';
+import { isUserLogged, prepareDictionary } from '../../utils/helpers';
 
 const Welcome = () => {
     useEffect(() => {
         prepareDictionary();
     }, []);
+
+    if (isUserLogged()) return <Redirect to="/dashboard" />;
 
     return (
         <GameLayout>

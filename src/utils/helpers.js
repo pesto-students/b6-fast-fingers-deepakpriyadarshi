@@ -57,3 +57,20 @@ export const getNewWord = (difficulty) => {
 
     return wordData[Math.round(Math.random() * (wordData.length - 1))].toUpperCase();
 };
+
+export const isUserLogged = () => {
+    let playerToken = window.localStorage.getItem('player');
+
+    return playerToken ? playerToken : false;
+};
+
+export const getPlayerAuthToken = () => {
+    let playerToken = window.localStorage.getItem('player');
+
+    return playerToken ? playerToken : 'NA';
+};
+
+export const logoutPlayer = () => {
+    window.localStorage.removeItem('player');
+    window.location.href = '/login';
+};

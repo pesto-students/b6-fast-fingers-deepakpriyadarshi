@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { menuSVG, logoNamePNG } from '../../utils/images';
 import { DEVELOPER_NAME, DEVELOPER_WEBSITE } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import { isUserLogged, logoutPlayer } from '../../utils/helpers';
 
 const GameLayout = ({ children }) => {
     const [mobNavActive, setMobNavActive] = useState(false);
@@ -19,9 +20,15 @@ const GameLayout = ({ children }) => {
                         <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium hover:border-blue-500 hover:shadow-lg hover:bg-white">
                             How To Play
                         </li>
-                        <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium hover:border-blue-500 hover:shadow-lg hover:bg-white">
-                            <Link to="/login">Log In</Link>
-                        </li>
+                        {isUserLogged() ? (
+                            <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium bg-red-500 hover:bg-transparent text-white hover:text-black hover:border-red-500 hover:shadow-lg hover:bg-white">
+                                <button onClick={() => logoutPlayer()}>Log Out</button>
+                            </li>
+                        ) : (
+                            <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium hover:border-blue-500 hover:shadow-lg hover:bg-white">
+                                <Link to="/login">Log In</Link>
+                            </li>
+                        )}
                     </ul>
                     <img
                         src={menuSVG}

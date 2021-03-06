@@ -11,6 +11,7 @@ import { savePlayerAuth } from '../../utils/localstorage';
 // Custom Login Hook
 import useAuthForm from '../../hooks/useAuthForm';
 import { authenticatePlayer } from '../../utils/api';
+import { isUserLogged } from '../../utils/helpers';
 
 const PlayerLogin = () => {
     const [authFormState, setAuthForm] = useAuthForm();
@@ -52,6 +53,7 @@ const PlayerLogin = () => {
         }
     };
 
+    if (isUserLogged()) return <Redirect to="/dashboard" />;
     if (authFormState.authStatus) return <Redirect to="/dashboard" />;
 
     return (

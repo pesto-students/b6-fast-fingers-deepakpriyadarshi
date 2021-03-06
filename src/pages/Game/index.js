@@ -39,7 +39,7 @@ const Game = (props) => {
         return (
             <Redirect
                 to={{
-                    pathname: '/result',
+                    pathname: `/${gameDetails.gameMode === 'player' ? 'dashboard' : 'result'}`,
                     state: { playerName: gameDetails.playerName },
                 }}
             />
