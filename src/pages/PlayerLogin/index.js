@@ -95,14 +95,6 @@ const PlayerLogin = () => {
                     </button>
                 )}
                 {authFormState.authLoader && <Loader className="w-20" loadingmessage={authFormState.authLoaderMessage} />}
-
-                <div className="mt-10">
-                    Don't have an account ? <br />
-                    <Link to="/register" className="text-blue-500">
-                        click here
-                    </Link>{' '}
-                    to register
-                </div>
             </div>
         </GameLayout>
     );
