@@ -91,7 +91,7 @@ const PlayerDashboard = () => {
                         <div className="w-1/3 p-5">
                             <span className="text-5xl md:text-7xl">
                                 {playerStatsLoading && '...'} {playerStatsError && 'NA'}{' '}
-                                {playerStatsData && convertSecondsToMMSS(playerStatsData.data.averageGameTime.toFixed(0))}
+                                {playerStatsData && convertSecondsToMMSS(Math.floor(playerStatsData.data.averageGameTime))}
                             </span>
                             <hr className="mt-3 mb-3 border-green-600" />
                             <span className="uppercase text-green-600 font-bold text-xs md:text-base">
