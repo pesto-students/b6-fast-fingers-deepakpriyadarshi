@@ -9,6 +9,7 @@ import { createGame } from '../../utils/localstorage';
 import SelectList from '../../components/SelectList';
 import { getPlayerDetails, getPlayerScoreStats } from '../../utils/api';
 import { useQuery } from 'react-query';
+import PlayerScoreBoard from '../../components/PlayerScoreboard';
 
 const PlayerDashboard = () => {
     const [gameDifficulty, setGameDifficulty] = useState('easy');
@@ -16,10 +17,7 @@ const PlayerDashboard = () => {
 
     const [playerData, setPlayerData] = useState('');
 
-    const { isLoading: playerStatsLoading, error: playerStatsError, data: playerStatsData } = useQuery(
-        'playerscorestats',
-        getPlayerScoreStats
-    );
+    const { status: playerStatsStatus, data: playerStatsData } = useQuery('playerscorestats', getPlayerScoreStats);
 
     useEffect(() => {
         getPlayerDetails()
@@ -82,16 +80,18 @@ const PlayerDashboard = () => {
                     <div className="flex justify-evenly min-w-full text-center pt-10">
                         <div className="w-1/3 p-5">
                             <span className="text-5xl md:text-7xl">
-                                {playerStatsLoading && '...'} {playerStatsError && 'NA'}{' '}
-                                {playerStatsData && playerStatsData.data.totalGamePlayed}
+                                {playerStatsStatus === 'loading' && '...'}
+                                {playerStatsStatus === 'error' && 'NA'}
+                                {playerStatsStatus === 'success' && playerStatsData.data.totalGamePlayed}
                             </span>
                             <hr className="mt-3 mb-3 border-pink-600" />
                             <span className="uppercase text-pink-600 font-bold text-xs md:text-base">Games Played</span>
                         </div>
                         <div className="w-1/3 p-5">
                             <span className="text-5xl md:text-7xl">
-                                {playerStatsLoading && '...'} {playerStatsError && 'NA'}{' '}
-                                {playerStatsData && convertSecondsToMMSS(Math.floor(playerStatsData.data.averageGameTime))}
+                                {playerStatsStatus === 'loading' && '...'}
+                                {playerStatsStatus === 'error' && 'NA'}
+                                {playerStatsStatus === 'success' && convertSecondsToMMSS(Math.floor(playerStatsData.data.averageGameTime))}
                             </span>
                             <hr className="mt-3 mb-3 border-green-600" />
                             <span className="uppercase text-green-600 font-bold text-xs md:text-base">
@@ -100,7 +100,9 @@ const PlayerDashboard = () => {
                         </div>
                         <div className="w-1/3 p-5">
                             <span className="text-5xl md:text-7xl text-blue-600">
-                                {playerStatsLoading && '...'} {playerStatsError && 'NA'} {playerStatsData && playerStatsData.data.bestScore}
+                                {playerStatsStatus === 'loading' && '...'}
+                                {playerStatsStatus === 'error' && 'NA'}
+                                {playerStatsStatus === 'success' && playerStatsData.data.bestScore}
                             </span>
                             <hr className="mt-3 mb-3 border-blue-600" />
                             <span className="uppercase text-blue-600 font-bold text-xs md:text-base">Best Score</span>
@@ -109,6 +111,7 @@ const PlayerDashboard = () => {
                 </div>
             </div>
             <hr className="mt-10" />
+            <PlayerScoreBoard />
         </GameLayout>
     );
 };
