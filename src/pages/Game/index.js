@@ -71,6 +71,7 @@ const Game = (props) => {
 
             setWordTimerKey((prevWordTimerKey) => (prevWordTimerKey += 1));
             userWordInput.value = '';
+            setPlayerInput('');
         } else setPlayerInput(userWord);
     };
 
