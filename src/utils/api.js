@@ -38,3 +38,13 @@ export const getPlayerScoreStats = async () => {
 
     return res.json();
 };
+
+export const savePlayerScore = async (playerScore) => {
+    const res = await fetch(FASTFINGERS_API_URL + '/score/savePlayerGameScore', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json;charset=UTF-8', Authorization: `Bearer ${getPlayerAuthToken()}` },
+        body: JSON.stringify({ score: playerScore }),
+    });
+
+    return res.json();
+};

@@ -7,6 +7,7 @@ import { convertSecondsToMMSS, getNewWord } from '../../utils/helpers';
 // import { DIFFICULTY_LEVELS } from '../../utils/constants';
 import { Redirect } from 'react-router-dom';
 import TextInput from '../../components/TextInput';
+import { savePlayerScore } from '../../utils/api';
 
 const Game = (props) => {
     let gameDetails = getGame(props.location.state.playerName);
@@ -88,9 +89,15 @@ const Game = (props) => {
         gameDetails.currentWord = newWord;
         gameDetails.currentWordTime = timeForWord;
 
-        saveGame(gameDetails);
+        if (gameDetails.gameMode === 'player') {
+            savePlayerScore(gameScore.current).then(() => {
+                setRedirectToResult(true);
+            });
+        } else {
+            saveGame(gameDetails);
+            setRedirectToResult(true);
+        }
 
-        setRedirectToResult(true);
         clearInterval(gameTimerId.current);
     };
 

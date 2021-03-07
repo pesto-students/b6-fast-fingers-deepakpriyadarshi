@@ -26,7 +26,7 @@ const GameLayout = ({ children }) => {
                             </li>
                         ) : (
                             <li className="mx-2.5 px-5 py-1 border-2 rounded font-medium hover:border-blue-500 hover:shadow-lg hover:bg-white">
-                                <Link to="/login">Log In</Link>
+                                <Link to="/register">Register</Link>
                             </li>
                         )}
                     </ul>
