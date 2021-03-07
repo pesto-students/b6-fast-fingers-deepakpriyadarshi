@@ -7,13 +7,16 @@ export const selectData = [
     {
         name: 'EASY',
         value: 'easy',
+        factor: 1,
     },
     {
         name: 'MEDIUM',
         value: 'medium',
+        factor: 1.5,
     },
     {
         name: 'HARD',
         value: 'hard',
+        factor: 2,
     },
 ];

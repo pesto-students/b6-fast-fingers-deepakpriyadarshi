@@ -4,7 +4,7 @@ import BrandBlock from '../../components/BrandBlock';
 import GameLayout from '../../components/GameLayout';
 import SelectList from '../../components/SelectList';
 import TextInput from '../../components/TextInput';
-import { isUserLogged } from '../../utils/helpers';
+import { difficultyToFactor, isUserLogged } from '../../utils/helpers';
 import { selectData } from '../../utils/constants';
 
 import { createGame } from '../../utils/localstorage';
@@ -34,7 +34,12 @@ const GuestLogin = () => {
         if (guestName.length <= 0) {
             setGuestNameError('Enter Your Name');
         } else {
-            createGame({ gameMode: 'guest', gameDifficulty: gameDifficulty, gameDifficultyFactor: 1, playerName: guestName });
+            createGame({
+                gameMode: 'guest',
+                gameDifficulty: gameDifficulty,
+                gameDifficultyFactor: difficultyToFactor(gameDifficulty),
+                playerName: guestName,
+            });
 
             setRedirectToGame(true);
         }

@@ -1,4 +1,5 @@
 import wordsDictionary from '../data/dictionary.json';
+import { selectData } from './constants';
 import { getWords, saveWords } from './localstorage';
 
 export const convertSecondsToMMSS = (seconds) => {
@@ -73,4 +74,14 @@ export const getPlayerAuthToken = () => {
 export const logoutPlayer = () => {
     window.localStorage.removeItem('player');
     window.location.href = '/login';
+};
+
+export const difficultyToFactor = (difficulty) => {
+    for (let diff_i = 0; diff_i < selectData.length; diff_i += 1) {
+        if (selectData[diff_i].value === difficulty) {
+            return selectData[diff_i].factor;
+        }
+    }
+
+    return 1;
 };
