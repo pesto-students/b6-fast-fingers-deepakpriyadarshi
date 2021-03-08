@@ -102,10 +102,12 @@ const PlayerDashboard = () => {
                             <span className="text-5xl md:text-7xl text-blue-600">
                                 {playerStatsStatus === 'loading' && '...'}
                                 {playerStatsStatus === 'error' && 'NA'}
-                                {playerStatsStatus === 'success' && playerStatsData.data.bestScore}
+                                {playerStatsStatus === 'success' && convertSecondsToMMSS(Math.floor(playerStatsData.data.bestScore))}
                             </span>
                             <hr className="mt-3 mb-3 border-blue-600" />
-                            <span className="uppercase text-blue-600 font-bold text-xs md:text-base">Best Score</span>
+                            <span className="uppercase text-blue-600 font-bold text-xs md:text-base">
+                                Best Score <small>(MM:SS)</small>
+                            </span>
                         </div>
                     </div>
                 </div>
